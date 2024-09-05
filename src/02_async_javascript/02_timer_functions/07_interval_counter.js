@@ -7,7 +7,16 @@ The function should use setInterval to print integers.
 If n is less than 1, the function should immediately print "Invalid input".
 */
 function startCounter(n, delay) {
-    // Implement this function
+  if (n < 1) return console.log("Invalid input");
+  let count = 1;
+  const interval = setInterval(() => {
+    if (count <= n) {
+      console.log(count);
+      count++;
+    } else {
+      clearInterval(interval);
+    }
+  }, delay);
 }
 
 module.exports = startCounter;

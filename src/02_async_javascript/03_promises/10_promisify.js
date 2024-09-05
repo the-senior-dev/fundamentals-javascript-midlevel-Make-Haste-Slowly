@@ -19,8 +19,29 @@ its callback with an error.
 // See how promisify works here: https://nodejs.org/dist/latest-v8.x/docs/api/util.html#util_util_promisify_original
 // Implement your own version of it bellow(senior interview question):
 
-function promisify(nodeStyleFunction) {
-    // Implement this function
+function promisify(fn) {
+  return function (...args) {
+    return new Promise((resolve, reject) => {
+      fn(...args, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  };
 }
+
+function sum(n, x) {
+  console.log(n + x);
+}
+
+const nodeCallback = (arg1, arg2, callback) => {
+  return callback(arg1, arg2);
+};
+
+const promisifiedfunction = promisify(nodeCallback(...args, sum));
+promisifiedfunction(1, 5);
 
 module.exports = promisify;
